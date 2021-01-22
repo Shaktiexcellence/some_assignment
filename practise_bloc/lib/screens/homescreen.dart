@@ -4,8 +4,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            child:
-                Text("This is Home Screen", style: TextStyle(fontSize: 30))));
+        body: Center(
+          child: Container(
+              child:
+                  Text("This is Home Screen", style: TextStyle(fontSize: 30)))
+        ));
   }
 }

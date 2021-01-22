@@ -6,7 +6,6 @@ import 'package:practise_bloc/services/loginservice.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial());
 
-
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginWithCredentials) {

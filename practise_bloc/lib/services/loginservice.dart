@@ -7,7 +7,7 @@ final apikey = null;
 Post _post = Post();
 Future<LoginModel> fetchData(String username, String password) async {
   final url =
-      'https://apistaginghr.excellencetechnologies.in/attendance/API_HR/api.php';
+      'http://dynamic.hr.excellencetechnologies.in/dynamic_hr/HrApi/backend/attendance/API_HR/api.php';
   Map data = {
     "token": apikey,
     "action": "login",
