@@ -7,7 +7,7 @@ final apikey = null;
 Post _post = Post();
 Future<LoginModel> fetchData(String username, String password) async {
   final url =
-      'http://dynamic.hr.excellencetechnologies.in/dynamic_hr/HrApi/backend/attendance/API_HR/api.php';
+      'https://apistaginghr.excellencetechnologies.in/attendance/API_HR/api.php';
   Map data = {
     "token": apikey,
     "action": "login",
@@ -17,7 +17,15 @@ Future<LoginModel> fetchData(String username, String password) async {
   return _post
       .post(url, body: json.encode(data))
       .then((dynamic response) async {
-    StorageUtil.setUserToken(response["data"]["token"]);
+    if (response["error"] >= 1)
+      throw new Exception(response["data"]["message"]);
+    if (response["error"] == 0) {
+      StorageUtil.setUserName(username);
+      StorageUtil.setPassword(password);
+      StorageUtil.setUserToken(response["data"]["token"]);
+      StorageUtil.setUserId(response["data"]["userid"]);
+      StorageUtil.setLoggedIn(true);
+    }
     return LoginModel.fromJson(response);
   });
 }

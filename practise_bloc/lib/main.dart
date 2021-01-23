@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:practise_bloc/blocs/loginbloc/loginstate.dart';
+import 'package:practise_bloc/blocs/profilebloc/profile_bloc.dart';
 import 'package:practise_bloc/screens/homescreen.dart';
 import 'package:practise_bloc/screens/login_screen.dart';
 import 'package:practise_bloc/services/loginservice.dart';
@@ -28,6 +29,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<LoginBloc>(
           create: (context) => LoginBloc(),
         ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(),
+        ),
       ], child: HrApp()),
     );
   }
@@ -40,9 +44,9 @@ class HrApp extends StatelessWidget {
       body: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           if (state is LoginSuccess) {
-            print("state in main>>>>>>>>>>>>> $state");
-            //   fetchProfile();
-            return HomeScreen();
+//        print("state in main>>>>>>>>>>>>> $state");
+       //     getprofile();
+            return ShowProfile();
           }
           return LoginScreen();
         },

@@ -2,10 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageUtil {
   static StorageUtil _storageUtil;
-  static SharedPreferences _sharedPreferences;
+  static SharedPreferences _preferences;
 
-  static Future<StorageUtil> getINstance() async {
+  static Future<StorageUtil> getInstance() async {
     if (_storageUtil == null) {
+      // keep local instance till it is fully initialized.
       var secureStorage = StorageUtil._();
       await secureStorage._init();
       _storageUtil = secureStorage;
@@ -16,28 +17,88 @@ class StorageUtil {
   StorageUtil._();
 
   Future _init() async {
-    _sharedPreferences = await SharedPreferences.getInstance();
+    _preferences = await SharedPreferences.getInstance();
   }
 
-  static String getProfileImage({String defValue = ''}) {
-    if (_sharedPreferences == null) {
+  static Future<bool> setUserName(String value) async {
+    if (_preferences == null) return null;
+    return _preferences.setString('username', value);
+  }
+
+  static String getUserName({String defValue = ''}) {
+    if (_preferences == null) return defValue;
+    return _preferences.getString('username') ?? defValue;
+  }
+
+  static Future<bool> setPassword(String value) async {
+    if (_preferences == null) return null;
+    return _preferences.setString('password', value);
+  }
+
+  static String getPassword({String defValue = ''}) {
+    if (_preferences == null) return defValue;
+    return _preferences.getString('password') ?? defValue;
+  }
+
+//get profileImg
+  static String getProfileImg({String defValue = ''}) {
+    if (_preferences == null) return defValue;
+    return _preferences.getString('profileImg') ?? defValue;
+  }
+
+  //set profileImg
+  static Future<bool> setProfileImg(String value) async {
+    if (_preferences == null) return null;
+    return _preferences.setString('profileImg', value);
+  }
+
+  //get usertoken
+  static String getUserToken({String defValue = ''}) {
+    if (_preferences == null) return defValue;
+    print(_preferences.getKeys());
+
+    return _preferences.getString('usertoken') ?? defValue;
+  }
+
+  //set usertoken
+  static Future<bool> setUserToken(String value) async {
+    if (_preferences == null) return null;
+    return _preferences.setString('usertoken', value);
+  }
+
+  //get userid
+  static String getUserId({String defValue = ''}) {
+    if (_preferences == null) return defValue;
+    return _preferences.getString('userid') ?? defValue;
+  }
+
+  //set userid
+  static Future<bool> setUserId(String value) async {
+    if (_preferences == null) return null;
+    return _preferences.setString('userid', value);
+  }
+
+  //get isLoggedIn
+  static bool getLoggedIn({bool defValue = false}) {
+    if (_preferences == null) return defValue;
+    return _preferences.getBool('islogged') ?? defValue;
+  }
+
+  //set isLoggedIn
+  static Future<bool> setLoggedIn(bool value) async {
+    if (_preferences == null) return null;
+    return _preferences.setBool('islogged', value);
+  }
+
+  static Future<bool> clear(bool value) async {
+    if (_preferences == null)
+      return null;
+    else {
+      _preferences.remove('profileImg');
+      _preferences.remove('usertoken');
+      _preferences.remove('userid');
+      _preferences.remove('islogged');
       return null;
     }
-    return _sharedPreferences.getString('profileimage');
-  }
-
-  static Future<bool> setProfileImage(String value) async {
-    if (_sharedPreferences == null) return null;
-    return _sharedPreferences.setString('profileimage', value);
-  }
-
-  static String getUserToken({String defValue = ''}) {
-    if (_sharedPreferences == null) return null;
-    return _sharedPreferences.getString('usertoken') ?? defValue;
-  }
-
-  static Future<bool> setUserToken(String value) async {
-    if (_sharedPreferences == null) return null;
-    return _sharedPreferences.setString('usertoken', value);
   }
 }
